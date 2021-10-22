@@ -25,6 +25,15 @@ class VatServiceTest {
     }
 
     @Test
+    void testCalculateGrossPriceWithDefaultVat_WhenProductWithNettoPriceWithFractionPart_ShouldReturnGrossPriceWithPrecisionTo4NumbersInFractionPart() throws Exception {
+        Product product = generateProductWithPrice("133.32");
+
+        BigDecimal grossPrice = vatService.getGrossPriceForDefaultVat(product);
+
+        assertThat(grossPrice).isEqualByComparingTo(new BigDecimal("163.9836"));
+    }
+
+    @Test
     void testCalculateGrossPrice_WhenProductAndVatAreValid_ShouldReturnGrossPrice() throws Exception {
         Product product = generateProductWithPrice("10.00");
 
