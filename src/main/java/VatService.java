@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 class VatService {
     BigDecimal vatValue;
@@ -16,8 +17,7 @@ class VatService {
         if (isGreaterThanOne(vatValue)) {
             throw new Exception("Vat value have to be smaller than 1!");
         }
-        MathContext mathContext = new MathContext(4);
-        return netPrice.multiply(vatValue.add(BigDecimal.ONE)).round(mathContext);
+        return netPrice.multiply(vatValue.add(BigDecimal.ONE)).setScale(4, RoundingMode.HALF_UP);
     }
 
     private boolean isGreaterThanOne(BigDecimal vatValue) {
