@@ -2,7 +2,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-class VatService {
+public class VatService {
     BigDecimal vatValue;
 
     public VatService() {
@@ -21,6 +21,6 @@ class VatService {
     }
 
     private boolean isGreaterThanOne(BigDecimal vatValue) {
-        return vatValue.compareTo(BigDecimal.ONE) == 1;
+        return vatValue.compareTo(BigDecimal.ONE) > 0;
     }
 }

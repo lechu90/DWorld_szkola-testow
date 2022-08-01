@@ -1,7 +1,7 @@
 import java.math.BigDecimal;
 import java.util.UUID;
 
-class Product {
+public class Product {
 
     UUID id;
 

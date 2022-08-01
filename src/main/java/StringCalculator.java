@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class StringCalculator {
+public class StringCalculator {
     int add(String input) {
         if (input.isEmpty()) {
             return 0;
