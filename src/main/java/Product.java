@@ -18,4 +18,13 @@ public class Product {
     public BigDecimal getNetPrice() {
         return netPrice;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", netPrice=" + netPrice +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }
