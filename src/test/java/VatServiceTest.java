@@ -87,10 +87,10 @@ public class VatServiceTest {
         BigDecimal grossPrice = vatService.getGrossPrice(product.getNetPrice(), type);
 
         assertThat(grossPrice).isEqualByComparingTo(product.getNetPrice());
-        assertThat(logCaptor.getInfoLogs()).hasSize(2).containsExactly("Calculating gross price (calculateGrossPrice)",
+        assertThat(logCaptor.getInfoLogs()).hasSize(3).containsExactly("Calculating gross price (calculateGrossPrice)", "(isGreaterThanOne) vatValue = 0",
                 "(calculateGrossPrice) Gross price = 150.0000");
         assertThat(logCaptor.getWarnLogs()).hasSize(1).containsExactly("Get gross price with VAT specific for " +
-                "product type (getGrossPrice): Coffee and netto price = 150.00");
+                "product type (getGrossPrice() fired): Coffee and netto price = 150.00");
     }
 
     @Test

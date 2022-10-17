@@ -19,7 +19,7 @@ public class VatService {
     }
 
     public BigDecimal getGrossPrice(BigDecimal netPrice, String productType) throws IncorrectVatException {
-        logger.warn("Get gross price with VAT specific for product type (getGrossPrice): " + productType + " and netto price = " + netPrice);
+        logger.warn("Get gross price with VAT specific for product type (getGrossPrice() fired): " + productType + " and netto price = " + netPrice);
         BigDecimal vatValue = vatProvider.getVatForType(productType);
         return calculateGrossPrice(netPrice, vatValue);
     }
@@ -36,7 +36,7 @@ public class VatService {
     }
 
     private boolean isGreaterThanOne(BigDecimal vatValue) {
-        logger.debug("(isGreaterThanOne) vatValue = " + vatValue);
+        logger.info("(isGreaterThanOne) vatValue = " + vatValue);
         return vatValue.compareTo(BigDecimal.ONE) > 0;
     }
 }
