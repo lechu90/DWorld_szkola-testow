@@ -1,3 +1,4 @@
+import nl.altindag.log.LogCaptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,14 @@ public class VatServiceTest {
 
     private VatProvider vatProvider;
 
+    private LogCaptor logCaptor;
+
     @BeforeEach
-    public void prepareVatService() {
+    public void setup() {
         vatProvider = mock(VatProvider.class);
         vatService = new VatService(vatProvider);
+
+        logCaptor = LogCaptor.forClass(VatService.class);
     }
 
     @Test
@@ -71,6 +76,21 @@ public class VatServiceTest {
         BigDecimal grossPrice = vatService.getGrossPrice(product.getNetPrice(), type);
 
         assertThat(grossPrice).isEqualByComparingTo(product.getNetPrice());
+    }
+
+    @Test
+    void testCalculateGrossPrice_WhenVatIsZero_ShouldReturnGrossPriceEqualsToNettoPriceAndSpecificLogs() throws IncorrectVatException {
+        String type = "Coffee";
+        Product product = generateProduct("150.00", type);
+
+        when(vatProvider.getVatForType(type)).thenReturn(new BigDecimal("0"));
+        BigDecimal grossPrice = vatService.getGrossPrice(product.getNetPrice(), type);
+
+        assertThat(grossPrice).isEqualByComparingTo(product.getNetPrice());
+        assertThat(logCaptor.getInfoLogs()).hasSize(2).containsExactly("Calculating gross price (calculateGrossPrice)",
+                "(calculateGrossPrice) Gross price = 150.0000");
+        assertThat(logCaptor.getWarnLogs()).hasSize(1).containsExactly("Get gross price with VAT specific for " +
+                "product type (getGrossPrice): Coffee and netto price = 150.00");
     }
 
     @Test
